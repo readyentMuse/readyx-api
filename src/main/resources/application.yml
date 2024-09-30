@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: readyx
+  security:
+    user:
+      name: admin
+      password: admin
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
+#  type-aliases-package: com.readyent.readyx  # 도메인 패키지 경로
+#  mapper-locations: classpath:mapper/**/*.xml    # 매퍼 XML 파일 위치
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /api/swagger-ui.html
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operationsSorter: method
+    tagsSorter: name
+#    operations-sorter: alpha
+
+# MyBatis SQL 로그 레벨을 DEBUG로 설정
+logging:
+  level:
+    root: INFO
+#    com.readyent.readyx: DEBUG
+    # MyBatis SQL 쿼리 로깅 설정
+    com.readyent.readyx.mapper: DEBUG  # 해당 패키지에 매퍼가 있는 경우
+    org.apache.ibatis: DEBUG        # MyBatis 전체 쿼리 로깅
+    jdbc.sqlonly: DEBUG             # SQL만 로깅하려면 추가 (선택 사항)
+
+#파일 용량 제한
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB   # 최대 파일 크기
+      max-request-size: 10MB # 전체 요청의 최대 크기
+jwt:
+  secret: V2hhdCB5b3Ugc2VlIGlzIGEgdW5pcXVlbHkgcmFuZG9tIGFuZCBsb25nIHNlY3JldCBzdHJpbmcgdG8gYmUgdXNlZCB3aXRoIEhTNTEy
+  #  secret: ${JWT_SECRET_KEY}
+  expiration: 3600000

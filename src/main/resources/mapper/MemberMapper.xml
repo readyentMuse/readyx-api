@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.readyent.readyx.mapper.MemberMapper">
+
+    <insert id="insertMember"
+            parameterType="com.readyent.readyx.domain.dto.request.MemberRequestDto$InsertRequest">
+        INSERT INTO readyx.`member`
+        (name, mobile_number, company_name, company_phone, department, email, sns_type, sns_user_id, business_card_file, status)
+        VALUES (#{name}, #{mobileNumber}, #{companyName}, #{companyPhone}, #{department}, #{email}, #{snsType}, #{snsUserId}, #{businessCardFileDataAsBytes, jdbcType=BLOB}, #{status})
+    </insert>
+    <update id="updateMember">
+        UPDATE readyx.member
+        <set>
+            <if test="requestDto.name != null">
+                name = #{requestDto.name},
+            </if>
+            <if test="requestDto.mobileNumber != null">
+                mobile_number = #{requestDto.mobileNumber},
+            </if>
+            <if test="requestDto.companyName != null">
+                company_name = #{requestDto.companyName},
+            </if>
+            <if test="requestDto.companyPhone != null">
+                company_phone = #{requestDto.companyPhone},
+            </if>
+            <if test="requestDto.department != null">
+                department = #{requestDto.department},
+            </if>
+            <if test="requestDto.email != null">
+                email = #{requestDto.email},
+            </if>
+            <if test="requestDto.snsType != null">
+                sns_type = #{requestDto.snsType},
+            </if>
+            <if test="requestDto.snsUserId != null">
+                sns_user_id = #{requestDto.snsUserId},
+            </if>
+            <if test="requestDto.businessCardFileDataAsBytes != null">
+                business_card_file = #{requestDto.businessCardFileDataAsBytes, jdbcType=BLOB},
+            </if>
+            <if test="requestDto.status != null">
+                status = #{requestDto.status},
+            </if>
+            <if test="requestDto.status == '0002'">
+                approved_at = NOW(),
+            </if>
+            updated_at = NOW()
+        </set>
+        WHERE idx = #{memberId}
+    </update>
+    <select id="getMember" resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetResponse">
+        SELECT idx,
+               name,
+               mobile_number,
+               company_name,
+               company_phone,
+               department,
+               email,
+               sns_type,
+               sns_user_id,
+               business_card_file,
+               status,
+               approved_at,
+               created_at,
+               updated_at
+        FROM readyx.member
+        WHERE idx = #{memberId}
+    </select>
+
+    <select id="findMemberByStatuse"
+            resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetResponse">
+        SELECT idx, name, mobile_number, company_name, company_phone, department, email, sns_type, sns_user_id, business_card_file, status, approved_at, created_at, updated_at
+        FROM readyx.member
+        WHERE status IN
+        <foreach item="status" collection="statusList" open="(" separator="," close=")">
+            #{status}
+        </foreach>
+        ORDER BY created_at DESC
+    </select>
+    <select id="findMemberByNameOrMobileNumber"
+            resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetResponse">
+        SELECT idx,
+        name,
+        mobile_number,
+        company_name,
+        company_phone,
+        department,
+        email,
+        sns_type,
+        sns_user_id,
+        business_card_file,
+        status,
+        approved_at,
+        created_at,
+        updated_at
+        FROM readyx.member
+        WHERE 1 = 1
+        <if test="name != null and name != ''">
+            AND name = #{name}
+        </if>
+        <if test="mobileNumber != null and mobileNumber != ''">
+            AND mobile_number = #{mobileNumber}
+        </if>
+        ORDER BY created_at DESC
+    </select>
+    <select id="findMemberByDate"
+            resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetStatusGroupCountResponse">
+        SELECT status, COUNT(*) AS count
+        FROM readyx.member
+        WHERE created_at <![CDATA[ >= ]]> #{startDate}
+        AND created_at <![CDATA[ <= ]]> #{endDate}
+        GROUP BY status
+        ORDER BY status ASC
+    </select>
+
+    <insert id="moveMemberToWithdrawn">
+        INSERT INTO readyx.member_with_draw
+        (idx_member, name, mobile_number, company_name, company_phone, department, email, sns_type, sns_user_id, business_card_file, status)
+        SELECT idx,
+               name,
+               mobile_number,
+               company_name,
+               company_phone,
+               department,
+               email,
+               sns_type,
+               sns_user_id,
+               business_card_file,
+               status
+        FROM readyx.member
+        WHERE idx = #{memberId}
+    </insert>
+    <update id="updateMemberToWithdrawn">
+        UPDATE readyx.`member`
+        SET
+--             name               = '',
+--             mobile_number      = '',
+--             company_name       = '',
+--             company_phone      = '',
+--             department         = '',
+--             email              = '',
+--             sns_type           = '',
+--             sns_user_id        = '',
+--             business_card_file = '',
+            status             = '0009',
+            updated_at         = NOW()
+        WHERE idx = #{memberId}
+    </update>
+</mapper>
