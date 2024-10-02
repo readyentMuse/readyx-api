@@ -81,14 +81,22 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<MemberResponseDto.GetResponse> findMemberByStatuse(List<String> statusList) {
-        return memberMapper.findMemberByStatuse(statusList);
+    public MemberResponseDto.FindMemberByStatuseResponse findMemberByStatuse(MemberRequestDto.FindMemberByStatuseRequest statusList) {
+        return MemberResponseDto.FindMemberByStatuseResponse.builder()
+                .memberList(memberMapper.findMemberByStatuse(statusList))
+                .totalCount(memberMapper.findMemberByStatuseCount(statusList))
+                .build();
+//        return memberMapper.findMemberByStatuse(statusList);
     }
 
     @Override
-    public List<MemberResponseDto.GetResponse> findMemberByNameOrMobileNumber(MemberRequestDto.FindMemberByNameAndMobileNumber requestDto) {
-        return memberMapper.findMemberByNameOrMobileNumber(requestDto);
+    public MemberResponseDto.FindMemberByNameAndMobileNumberResponse findMemberByNameAndMobileNumber(MemberRequestDto.FindMemberByNameAndMobileNumberRequest requestDto) {
+        return MemberResponseDto.FindMemberByNameAndMobileNumberResponse.builder()
+                .memberList(memberMapper.findMemberByNameAndMobileNumber(requestDto))
+                .totalCount(memberMapper.findMemberByNameAndMobileNumberCount(requestDto))
+                .build();
     }
+
 
     @Override
     public List<MemberResponseDto.GetStatusGroupCountResponse> findMemberByDate(MemberRequestDto.FindMemberByDateRequest requestDto) {

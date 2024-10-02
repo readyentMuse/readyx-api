@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 모델
@@ -76,12 +77,25 @@ public class MemberRequestDto {
     public static class UpdateRequest extends InsertRequest {
     }
 
+
     @Getter
     @Setter
-    public static class FindMemberByNameAndMobileNumber {
+    public static class FindMemberByStatuseRequest {
+        @Schema(description = "상태", example = "[\"0001\"]", defaultValue = "[\"0001\"]")
+        private List<String> statusList;
+        private PaginationRequestDto.PageReqeust pageReqeust;
+
+    }
+
+
+    @Getter
+    @Setter
+    public static class FindMemberByNameAndMobileNumberRequest {
         @Schema(description = "이름", example = "Daniel", defaultValue = "Daniel")
         private String name;
         @Schema(description = "휴대폰번호", example = "01012345678", defaultValue = "01012345678")
         private String mobileNumber;
+        private PaginationRequestDto.PageReqeust pageReqeust;
+
     }
 }

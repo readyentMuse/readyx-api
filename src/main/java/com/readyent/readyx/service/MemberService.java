@@ -3,7 +3,6 @@ package com.readyent.readyx.service;
 import com.readyent.readyx.domain.dto.request.MemberRequestDto;
 import com.readyent.readyx.domain.dto.response.MemberResponseDto;
 import com.readyent.readyx.domain.dto.response.ResponseDto;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,9 +18,9 @@ public interface MemberService {
 
     MemberResponseDto.GetResponse getMember(Long memberId);
 
-    List<MemberResponseDto.GetResponse> findMemberByStatuse(List<String> statusList);
+    MemberResponseDto.FindMemberByStatuseResponse findMemberByStatuse(MemberRequestDto.FindMemberByStatuseRequest statusList);
 
-    List<MemberResponseDto.GetResponse> findMemberByNameOrMobileNumber(MemberRequestDto.FindMemberByNameAndMobileNumber request);
+    MemberResponseDto.FindMemberByNameAndMobileNumberResponse findMemberByNameAndMobileNumber(MemberRequestDto.FindMemberByNameAndMobileNumberRequest request);
 
     List<MemberResponseDto.GetStatusGroupCountResponse> findMemberByDate(MemberRequestDto.FindMemberByDateRequest requestDto);
 }

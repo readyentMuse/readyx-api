@@ -3,10 +3,12 @@ package com.readyent.readyx.domain.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 모델
@@ -55,9 +57,29 @@ public class MemberResponseDto {
         @Schema(description = "회원 상태: 대기:0001/승인:0002/보류:0003/탈퇴:0009", example = "0001", defaultValue = "0001")
         private String status;
         @Schema(description = "갯수", example = "7", defaultValue = "7")
-        private Integer count;
+        private Integer totalCount;
     }
-//    public static class FindByStatusResponse{
-//        List<GetResponse> statuseList;
-//    }
+
+    @Getter
+    @Setter
+    @Builder
+    public static class FindMemberByStatuseResponse {
+        PaginationResponseDto.TotalCountResponse totalCount;
+        List<GetResponse> memberList;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    public static class FindMemberByDateResponse {
+        List<GetResponse> memberList;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    public static class FindMemberByNameAndMobileNumberResponse {
+        PaginationResponseDto.TotalCountResponse totalCount;
+        List<GetResponse> memberList;
+    }
 }

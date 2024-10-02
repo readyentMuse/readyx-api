@@ -75,9 +75,17 @@
         <foreach item="status" collection="statusList" open="(" separator="," close=")">
             #{status}
         </foreach>
-        ORDER BY created_at DESC
+        ORDER BY created_at
+        <if test="pageReqeust.sortType != null and pageReqeust.sortType == 'ASC'">
+            ASC
+        </if>
+        <if test="pageReqeust.sortType == null or pageReqeust.sortType == 'DESC'">
+            DESC
+        </if>
+        LIMIT #{pageReqeust.size}
+        OFFSET #{pageReqeust.offset}
     </select>
-    <select id="findMemberByNameOrMobileNumber"
+    <select id="findMemberByNameAndMobileNumber"
             resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetResponse">
         SELECT idx,
         name,
@@ -96,21 +104,50 @@
         FROM readyx.member
         WHERE 1 = 1
         <if test="name != null and name != ''">
-            AND name = #{name}
+            AND name LIKE CONCAT('%', #{name}, '%')
         </if>
         <if test="mobileNumber != null and mobileNumber != ''">
-            AND mobile_number = #{mobileNumber}
+            AND mobile_number LIKE CONCAT('%', #{mobileNumber}, '%')
         </if>
-        ORDER BY created_at DESC
+        ORDER BY created_at
+        <if test="pageReqeust.sortType != null and pageReqeust.sortType == 'ASC'">
+            ASC
+        </if>
+        <if test="pageReqeust.sortType == null or pageReqeust.sortType == 'DESC'">
+            DESC
+        </if>
+        LIMIT #{pageReqeust.size}
+        OFFSET #{pageReqeust.offset}
     </select>
     <select id="findMemberByDate"
             resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetStatusGroupCountResponse">
-        SELECT status, COUNT(*) AS count
+        SELECT status, COUNT(*) AS total_count
         FROM readyx.member
         WHERE created_at <![CDATA[ >= ]]> #{startDate}
         AND created_at <![CDATA[ <= ]]> #{endDate}
         GROUP BY status
         ORDER BY status ASC
+    </select>
+    <select id="findMemberByStatuseCount"
+            resultType="com.readyent.readyx.domain.dto.response.PaginationResponseDto$TotalCountResponse">
+        SELECT COUNT(*) AS total_count
+        FROM readyx.member
+        WHERE status IN
+        <foreach item="status" collection="statusList" open="(" separator="," close=")">
+            #{status}
+        </foreach>
+    </select>
+    <select id="findMemberByNameAndMobileNumberCount"
+            resultType="com.readyent.readyx.domain.dto.response.PaginationResponseDto$TotalCountResponse">
+        SELECT COUNT(*) total_count
+        FROM readyx.member
+        WHERE 1 = 1
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="mobileNumber != null and mobileNumber != ''">
+            AND mobile_number LIKE CONCAT('%', #{mobileNumber}, '%')
+        </if>
     </select>
 
     <insert id="moveMemberToWithdrawn">

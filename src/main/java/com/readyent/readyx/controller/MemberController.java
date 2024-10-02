@@ -9,13 +9,11 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.javassist.bytecode.stackmap.BasicBlock;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,18 +65,18 @@ public class MemberController {
     }
 
     @Operation(summary = "회원 찾기", description = "회원 상태별 찾기")
-    @GetMapping(value = "/member/find/by-status")
-    public List<MemberResponseDto.GetResponse> findMemberByStatuse(@Parameter(description = "회원 상태", required = true, example = "0001")
-                                                                   @RequestParam(value = "statusList", required = true) List<String> statusList
+    @PostMapping(value = "/member/find/by-status")
+    public MemberResponseDto.FindMemberByStatuseResponse findMemberByStatuse(@RequestBody MemberRequestDto.FindMemberByStatuseRequest statusList
+
     ) {
         return memberService.findMemberByStatuse(statusList);
     }
 
     @Operation(summary = "회원 찾기", description = "회원 이름/전화번호 찾기")
     @PostMapping(value = "/member/find/by-name-and-phone")
-    public List<MemberResponseDto.GetResponse> findMemberByNameAndMobileNumber(@RequestBody MemberRequestDto.FindMemberByNameAndMobileNumber requestDto
+    public MemberResponseDto.FindMemberByNameAndMobileNumberResponse findMemberByNameAndMobileNumber(@RequestBody MemberRequestDto.FindMemberByNameAndMobileNumberRequest requestDto
     ) {
-        return memberService.findMemberByNameOrMobileNumber(requestDto);
+        return memberService.findMemberByNameAndMobileNumber(requestDto);
     }
 
     @Operation(summary = "회원상태 별 카운트", description = "회원상태 별 카운트")

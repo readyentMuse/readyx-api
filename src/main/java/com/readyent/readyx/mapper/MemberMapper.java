@@ -2,6 +2,7 @@ package com.readyent.readyx.mapper;
 
 import com.readyent.readyx.domain.dto.request.MemberRequestDto;
 import com.readyent.readyx.domain.dto.response.MemberResponseDto;
+import com.readyent.readyx.domain.dto.response.PaginationResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,9 +20,12 @@ public interface MemberMapper {
 
     MemberResponseDto.GetResponse getMember(@Param("memberId") Long memberId);
 
-    List<MemberResponseDto.GetResponse> findMemberByStatuse(@Param("statusList") List<String> statusList);
+    List<MemberResponseDto.GetResponse> findMemberByStatuse(MemberRequestDto.FindMemberByStatuseRequest requestDto);
 
-    List<MemberResponseDto.GetResponse> findMemberByNameOrMobileNumber(MemberRequestDto.FindMemberByNameAndMobileNumber request);
+    List<MemberResponseDto.GetResponse> findMemberByNameAndMobileNumber(MemberRequestDto.FindMemberByNameAndMobileNumberRequest requestDto);
 
     List<MemberResponseDto.GetStatusGroupCountResponse> findMemberByDate(MemberRequestDto.FindMemberByDateRequest requestDto);
+
+    PaginationResponseDto.TotalCountResponse findMemberByStatuseCount(MemberRequestDto.FindMemberByStatuseRequest requestDto);
+    PaginationResponseDto.TotalCountResponse findMemberByNameAndMobileNumberCount(MemberRequestDto.FindMemberByNameAndMobileNumberRequest requestDto);
 }
