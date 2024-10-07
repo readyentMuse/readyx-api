@@ -80,7 +80,7 @@ public class MemberRequestDto {
 
     @Getter
     @Setter
-    public static class FindMemberByStatuseRequest {
+    public static class FindMemberByStatuseRequest extends FindMemberByDateRequest {
         @Schema(description = "상태", example = "[\"0001\"]", defaultValue = "[\"0001\"]")
         private List<String> statusList;
         private PaginationRequestDto.PageReqeust pageReqeust;

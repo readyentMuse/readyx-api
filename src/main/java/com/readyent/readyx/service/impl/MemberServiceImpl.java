@@ -8,6 +8,8 @@ import com.readyent.readyx.mapper.MemberMapper;
 import com.readyent.readyx.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +37,10 @@ public class MemberServiceImpl implements MemberService {
                 .build();
     }
 
+    /**
+     * 파일 -> Byte 변환
+     * @param requestDto
+     */
     private static void extracted(MemberRequestDto.InsertRequest requestDto) {
         MultipartFile file = requestDto.getBusinessCardFileData();
         if (file != null && !file.isEmpty()) {
