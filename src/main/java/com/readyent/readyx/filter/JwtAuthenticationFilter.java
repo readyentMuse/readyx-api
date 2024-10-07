@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws IOException, ServletException {
         String token = request.getHeader("Authorization");
 //        log.debug("토큰: {}", token);
-        System.out.println(String.format("토큰: %s", token));
+//        System.out.println(String.format("토큰: %s", token));
         if (token != null && !token.isEmpty() && token.startsWith("Bearer ")) {
             token = token.replace("Bearer ", "");
             try {
