@@ -9,7 +9,7 @@ import lombok.Setter;
 public class PaginationRequestDto {
     @Getter
     @Setter
-    public static class PageReqeust {
+    public static class PageRequest {
         @Schema(description = "페이지, 기본 페이지 번호는 0 (첫 페이지)", example = "0", defaultValue = "0")
         private int page = 0; // 기본 페이지 번호는 0 (첫 페이지)
         @Schema(description = "페이지 사이즈", example = "10", defaultValue = "10")

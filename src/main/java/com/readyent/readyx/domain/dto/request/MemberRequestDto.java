@@ -83,7 +83,7 @@ public class MemberRequestDto {
     public static class FindMemberByStatuseRequest extends FindMemberByDateRequest {
         @Schema(description = "상태", example = "[\"0001\"]", defaultValue = "[\"0001\"]")
         private List<String> statusList;
-        private PaginationRequestDto.PageReqeust pageReqeust;
+        private PaginationRequestDto.PageRequest pageRequest;
 
     }
 
@@ -95,7 +95,24 @@ public class MemberRequestDto {
         private String name;
         @Schema(description = "휴대폰번호", example = "01012345678", defaultValue = "01012345678")
         private String mobileNumber;
-        private PaginationRequestDto.PageReqeust pageReqeust;
+        private PaginationRequestDto.PageRequest pageRequest
+
+;
+
+    }
+
+    @Getter
+    @Setter
+    public static class FindMemberByNameAndMobileNumberAndStatuseRequest {
+        @Schema(description = "이름", example = "Daniel", defaultValue = "Daniel")
+        private String name;
+        @Schema(description = "휴대폰번호", example = "01012345678", defaultValue = "01012345678")
+        private String mobileNumber;
+        @Schema(description = "상태", example = "[\"0001\"]", defaultValue = "[\"0001\"]")
+        private List<String> statusList;
+        private PaginationRequestDto.PageRequest pageRequest
+
+;
 
     }
 }

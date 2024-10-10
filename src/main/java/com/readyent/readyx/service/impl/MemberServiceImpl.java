@@ -8,8 +8,6 @@ import com.readyent.readyx.mapper.MemberMapper;
 import com.readyent.readyx.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -100,6 +98,14 @@ public class MemberServiceImpl implements MemberService {
         return MemberResponseDto.FindMemberByNameAndMobileNumberResponse.builder()
                 .memberList(memberMapper.findMemberByNameAndMobileNumber(requestDto))
                 .totalCount(memberMapper.findMemberByNameAndMobileNumberCount(requestDto))
+                .build();
+    }
+
+    @Override
+    public MemberResponseDto.FindMemberByNameAndMobileNumberAndStatuseResponse findMemberByNameAndMobileNumberAndStatus(MemberRequestDto.FindMemberByNameAndMobileNumberAndStatuseRequest requestDto) {
+        return MemberResponseDto.FindMemberByNameAndMobileNumberAndStatuseResponse.builder()
+                .memberList(memberMapper.findMemberByNameAndMobileNumberAndStatuse(requestDto))
+                .totalCount(memberMapper.findMemberByNameAndMobileNumberAndStatuseCount(requestDto))
                 .build();
     }
 

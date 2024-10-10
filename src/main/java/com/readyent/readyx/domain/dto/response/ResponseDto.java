@@ -2,6 +2,7 @@ package com.readyent.readyx.domain.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class ResponseDto {
     @Getter
     @Setter
     @SuperBuilder
-    @NoArgsConstructor
+    @AllArgsConstructor
     @Schema(name = "ResultResponse", description = "RESPONSE_SUCCESS_FIND(200, \"0000\", \"정상적으로 처리되었습니다.\"),\n" +
             "    RESPONSE_SUCCESS_EXEC(200, \"0001\", \"정상적으로 조회되었습니다.\"),\n" +
             "    RESPONSE_SUCCESS_INST(200, \"0002\", \"정상적으로 등록되었습니다.\"),\n" +

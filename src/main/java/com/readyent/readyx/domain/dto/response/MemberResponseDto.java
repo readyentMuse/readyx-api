@@ -82,4 +82,12 @@ public class MemberResponseDto {
         PaginationResponseDto.TotalCountResponse totalCount;
         List<GetResponse> memberList;
     }
+
+    @Getter
+    @Setter
+    @Builder
+    public static class FindMemberByNameAndMobileNumberAndStatuseResponse {
+        PaginationResponseDto.TotalCountResponse totalCount;
+        List<GetResponse> memberList;
+    }
 }

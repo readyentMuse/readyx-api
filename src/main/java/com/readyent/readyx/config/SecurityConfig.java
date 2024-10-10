@@ -31,7 +31,8 @@ public class SecurityConfig {
         http
                 .csrf((csrf) -> csrf.disable()) // CSRF 보호 비활성화
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/auth/**"
+                        .requestMatchers("/api/v1/auth/**"
+                                , "/api/v1/member"
                                 , "/api/swagger-ui/**"
                                 , "/v3/api-docs/**"
                         )

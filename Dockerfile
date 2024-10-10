@@ -5,7 +5,8 @@ FROM openjdk:17-jdk
 WORKDIR /app
 
 # Copy the JAR file from the build directory to the container
-COPY build/libs/readyx-0.0.1-SNAPSHOT.jar app.jar
+#COPY build/libs/readyx-0.0.1-SNAPSHOT.jar app.jar
+COPY readyx-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the port that the application will run on
 EXPOSE 8080

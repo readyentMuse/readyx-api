@@ -28,4 +28,7 @@ public interface MemberMapper {
 
     PaginationResponseDto.TotalCountResponse findMemberByStatuseCount(MemberRequestDto.FindMemberByStatuseRequest requestDto);
     PaginationResponseDto.TotalCountResponse findMemberByNameAndMobileNumberCount(MemberRequestDto.FindMemberByNameAndMobileNumberRequest requestDto);
+
+    List<MemberResponseDto.GetResponse> findMemberByNameAndMobileNumberAndStatuse(MemberRequestDto.FindMemberByNameAndMobileNumberAndStatuseRequest requestDto);
+    PaginationResponseDto.TotalCountResponse findMemberByNameAndMobileNumberAndStatuseCount(MemberRequestDto.FindMemberByNameAndMobileNumberAndStatuseRequest requestDto);
 }

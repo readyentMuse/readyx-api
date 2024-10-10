@@ -71,19 +71,22 @@
             resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetResponse">
         SELECT idx, name, mobile_number, company_name, company_phone, department, email, sns_type, sns_user_id, business_card_file, status, approved_at, created_at, updated_at
         FROM readyx.member
-        WHERE status IN
-        <foreach item="status" collection="statusList" open="(" separator="," close=")">
-            #{status}
-        </foreach>
+        WHERE 1=1
+        <if test="statusList != null and statusList.size() > 0">
+            AND status IN
+            <foreach item="status" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
         ORDER BY created_at
-        <if test="pageReqeust.sortType != null and pageReqeust.sortType == 'ASC'">
+        <if test="pageRequest.sortType != null and pageRequest.sortType == 'ASC'">
             ASC
         </if>
-        <if test="pageReqeust.sortType == null or pageReqeust.sortType == 'DESC'">
+        <if test="pageRequest.sortType == null or pageRequest.sortType == 'DESC'">
             DESC
         </if>
-        LIMIT #{pageReqeust.size}
-        OFFSET #{pageReqeust.offset}
+        LIMIT #{pageRequest.size}
+        OFFSET #{pageRequest.offset}
     </select>
     <select id="findMemberByNameAndMobileNumber"
             resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetResponse">
@@ -110,14 +113,14 @@
             AND mobile_number LIKE CONCAT('%', #{mobileNumber}, '%')
         </if>
         ORDER BY created_at
-        <if test="pageReqeust.sortType != null and pageReqeust.sortType == 'ASC'">
+        <if test="pageRequest.sortType != null and pageRequest.sortType == 'ASC'">
             ASC
         </if>
-        <if test="pageReqeust.sortType == null or pageReqeust.sortType == 'DESC'">
+        <if test="pageRequest.sortType == null or pageRequest.sortType == 'DESC'">
             DESC
         </if>
-        LIMIT #{pageReqeust.size}
-        OFFSET #{pageReqeust.offset}
+        LIMIT #{pageRequest.size}
+        OFFSET #{pageRequest.offset}
     </select>
     <select id="findMemberByDate"
             resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetStatusGroupCountResponse">
@@ -183,4 +186,62 @@
             updated_at         = NOW()
         WHERE idx = #{memberId}
     </update>
+    <select id="findMemberByNameAndMobileNumberAndStatuse"
+            resultType="com.readyent.readyx.domain.dto.response.MemberResponseDto$GetResponse">
+        SELECT idx,
+        name,
+        mobile_number,
+        company_name,
+        company_phone,
+        department,
+        email,
+        sns_type,
+        sns_user_id,
+        business_card_file,
+        status,
+        approved_at,
+        created_at,
+        updated_at
+        FROM readyx.member
+        WHERE 1 = 1
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="mobileNumber != null and mobileNumber != ''">
+            AND mobile_number LIKE CONCAT('%', #{mobileNumber}, '%')
+        </if>
+        <if test="statusList != null and statusList.size() > 0">
+            AND status IN
+            <foreach item="status" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        ORDER BY created_at
+        <if test="pageRequest.sortType != null and pageRequest.sortType == 'ASC'">
+            ASC
+        </if>
+        <if test="pageRequest.sortType == null or pageRequest.sortType == 'DESC'">
+            DESC
+        </if>
+        LIMIT #{pageRequest.size}
+        OFFSET #{pageRequest.offset}
+    </select>
+    <select id="findMemberByNameAndMobileNumberAndStatuseCount"
+            resultType="com.readyent.readyx.domain.dto.response.PaginationResponseDto$TotalCountResponse">
+        SELECT COUNT(*) total_count
+        FROM readyx.member
+        WHERE 1 = 1
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="mobileNumber != null and mobileNumber != ''">
+            AND mobile_number LIKE CONCAT('%', #{mobileNumber}, '%')
+        </if>
+        <if test="statusList != null and statusList.size() > 0">
+            AND status IN
+            <foreach item="status" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+    </select>
 </mapper>

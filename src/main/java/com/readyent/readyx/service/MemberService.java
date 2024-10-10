@@ -7,7 +7,7 @@ import com.readyent.readyx.domain.dto.response.ResponseDto;
 import java.util.List;
 
 /**
- * 회원 컨트롤러
+ * 회원 서비스
  */
 public interface MemberService {
     ResponseDto.ResultResponse insertMember(MemberRequestDto.InsertRequest requestDto);
@@ -22,5 +22,8 @@ public interface MemberService {
 
     MemberResponseDto.FindMemberByNameAndMobileNumberResponse findMemberByNameAndMobileNumber(MemberRequestDto.FindMemberByNameAndMobileNumberRequest request);
 
+    MemberResponseDto.FindMemberByNameAndMobileNumberAndStatuseResponse findMemberByNameAndMobileNumberAndStatus(MemberRequestDto.FindMemberByNameAndMobileNumberAndStatuseRequest requestDto);
+
     List<MemberResponseDto.GetStatusGroupCountResponse> findMemberByDate(MemberRequestDto.FindMemberByDateRequest requestDto);
+
 }

@@ -20,10 +20,11 @@ public class MybatisDbConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://database-dev.chqweg66ns7c.ap-northeast-2.rds.amazonaws.com:3306/readyx");
+        dataSource.setUrl("jdbc:mysql://database-dev.chqweg66ns7c.ap-northeast-2.rds.amazonaws.com:3306/readyx?serverTimezone=Asia/Seoul");
         dataSource.setUsername("root");
         dataSource.setPassword("Tg8#Lm9$Xp1&Nv2!");
-//        dataSource.setUrl("jdbc:mysql://localhost:3306/readyx");
+
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/readyx?serverTimezone=Asia/Seoul");
 //        dataSource.setUsername("root");
 //        dataSource.setPassword("Android4.03");
         return dataSource;

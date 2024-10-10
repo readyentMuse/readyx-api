@@ -79,6 +79,13 @@ public class MemberController {
         return memberService.findMemberByNameAndMobileNumber(requestDto);
     }
 
+    @Operation(summary = "회원 찾기", description = "회원 이름/전화번호/상태 찾기")
+    @PostMapping(value = "/member/find/by-name-and-phone-and-status")
+    public MemberResponseDto.FindMemberByNameAndMobileNumberAndStatuseResponse findMemberByNameAndMobileNumberAndStatus(@RequestBody MemberRequestDto.FindMemberByNameAndMobileNumberAndStatuseRequest requestDto
+    ) {
+        return memberService.findMemberByNameAndMobileNumberAndStatus(requestDto);
+    }
+
     @Operation(summary = "회원상태 별 카운트", description = "회원상태 별 카운트")
     @PostMapping(value = "/member/find/by-date")
     public List<MemberResponseDto.GetStatusGroupCountResponse> findMemberByDate(@RequestBody MemberRequestDto.FindMemberByDateRequest requestDto
